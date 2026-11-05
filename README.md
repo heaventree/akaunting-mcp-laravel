@@ -151,6 +151,18 @@ Add the following to your MCP client configuration (e.g. Claude Desktop's `claud
 | `delete_document` | Delete an invoice or bill by ID |
 | `list_transactions` | List income and expense payments |
 | `create_transaction` | Record an income or expense payment |
+| `create_transactions_batch` | Record up to 100 transactions in one call (bank statement lines, migrations); reports per-line success/failure |
+| `get_transaction` | Get full details for a single transaction |
+| `update_transaction` | Categorise or correct a transaction (category, contact, description, reference, linked document, etc.) |
+| `delete_transaction` | Delete a transaction by ID |
+| `record_document_payment` | Record a payment against an invoice or bill so Akaunting marks it partial/paid |
+| `list_transfers` | List transfers between accounts |
+| `create_transfer` | Move money between two of your own accounts |
+| `create_account` | Create a bank, card or clearing account (e.g. Stripe, GoCardless) |
+| `create_category` | Create an income, expense or item category |
+| `create_currency` | Add a currency, optionally as the company default |
+| `list_reports` | List available reports |
+| `get_report` | Run a report and return its figures |
 | `list_accounts` | List financial accounts (bank, cash, etc.) |
 | `list_categories` | List categories, filtered by type |
 | `list_taxes` | List tax rates |
@@ -158,6 +170,19 @@ Add the following to your MCP client configuration (e.g. Claude Desktop's `claud
 | `list_companies` | List companies the user can access (to find company IDs) |
 
 ---
+
+## Running on Docker / Dokploy
+
+A `Dockerfile` is included. Deploy it as an application and set these environment variables:
+
+| Variable | Meaning |
+|---|---|
+| `APP_KEY` | Laravel key (`php artisan key:generate --show`) |
+| `APP_URL` | Public URL of the MCP |
+| `AKAUNTING_BASE_URL` | Akaunting URL, no trailing slash (an internal Docker hostname works if both share a network) |
+| `AKAUNTING_COMPANY_ID` | Default company (clients can override with `X-Company-ID`) |
+
+The MCP endpoint is `/mcp`. Clients authenticate with HTTP Basic using an Akaunting user's email and password.
 
 ## Project Structure
 
